@@ -2,16 +2,23 @@ import React from 'react';
 import styled from 'styled-components'
 
 type MyProps = {
-  children: string
+  children: string,
+  onClick: (ev: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const Button: React.SFC  = (props) => {
+const Button: React.SFC<MyProps> = (props) => {
+  const StyledButton = styled.button`
+    background: palevioletred;
+    border-radius: 3px;
+    border: none;
+    color: white
+  `
     return (
-      <div className="App">
+      <StyledButton onClick={(e) => props.onClick(e)}>
          {props.children}
-      </div>
+      </StyledButton>
     );
   }
   
-  export default Button;
+export default Button;
   
