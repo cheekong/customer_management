@@ -1,8 +1,13 @@
-import { Reducer } from 'redux';
-
-import * as actionTypes from '../actions/actionTypes';
-import { CustomerActionTypes, CustomerState } from './types';
-
+import { 
+    GET_CUSTOMERS,
+    GET_CUSTOMER,
+    UPDATE_CUSTOMER,
+    SAVE_NEW_CUSTOMER,
+    DELETE_CUSTOMER,
+    CustomerActionTypes, 
+    CustomerState 
+} from './types';
+import * as utilities from '../../utilities/utilities';
 
 const initialState: CustomerState = {
     customers: {
@@ -39,19 +44,53 @@ const getCustomer = (
     return(state);
 }
 
-
-const saveCustomer = (
+const updateCustomer = (
     state: CustomerState, 
-    id: string, firstName: 
-    string, lastName: 
-    string, dateOfBirth: 
-    Date) => {
+    id: string, 
+    firstName: string, 
+    lastName: string, 
+    dateOfBirth: Date
+) => {
     let newState = JSON.parse(JSON.stringify(state));
-    const customerExists = newState.customer.allIds.filter((id: string) => id === id);
+    const customerExists = newState.customers.allIds.filter((id: string) => id === id);
     if(customerExists){
-        let targetCustomer = newState.customer.byId[id];
+        newState.customer.byId[id] = {
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth
+        };
+    } else {
+        newState.ui.newCustomer.state = 'LOADED';
+        newState.ui.newCustomer.errorMessage = 'User not found. Please try again.';
     }
-    return({...state});
+    return newState;
+}
+
+const saveNewCustomer = (
+    state: CustomerState, 
+    firstName: string, 
+    lastName: string, 
+    dateOfBirth: Date
+) => {
+    let newState = JSON.parse(JSON.stringify(state));
+    const id = utilities.generateId();
+
+    const customerExists = newState.customers.allIds.filter((existingId: string) => existingId === id);
+global.console.log('customerExists',customerExists);
+global.console.log('customerExists',customerExists);
+    if(customerExists.length === 0){
+        newState.customers.allIds.push(id);
+        newState.customers.byId[id] = {
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth
+        }
+    } else {
+        newState.ui.newCustomer.state = 'LOADED';
+        newState.ui.newCustomer.errorMessage = 'Please try again. Unexpected error has occured';
+    }
+    global.console.log('test state', newState);
+    return newState;
 }
 
 const deleteCustomer = (
@@ -73,13 +112,15 @@ const reducer = (
     action: CustomerActionTypes
 ): CustomerState => {
     switch( action.type) {
-        case actionTypes.GET_CUSTOMERS: 
+        case GET_CUSTOMERS: 
             return getCustomers( state, action );
-        case actionTypes.GET_CUSTOMER: 
+        case GET_CUSTOMER: 
             return getCustomer( state, action.payload.id );
-        case actionTypes.SAVE_CUSTOMER: 
-            return saveCustomer( state, action.payload.id, action.payload.firstName, action.payload.lastName, action.payload.dateOfBirth );
-        case actionTypes.DELETE_CUSTOMER: 
+        case SAVE_NEW_CUSTOMER: 
+            return saveNewCustomer( state, action.payload.firstName, action.payload.lastName, action.payload.dateOfBirth );
+        case UPDATE_CUSTOMER: 
+            return updateCustomer( state, action.payload.id, action.payload.firstName, action.payload.lastName, action.payload.dateOfBirth );
+        case DELETE_CUSTOMER: 
             return deleteCustomer( state, action.payload.id );
         default: return state;
     }

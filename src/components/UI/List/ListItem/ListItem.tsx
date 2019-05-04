@@ -1,11 +1,16 @@
-import React from 'react';
-import styled from 'styled-components'
+import React, {ReactNode} from 'react';
+import {StyledListItem} from './Styled'
 
-const ListItem: React.SFC  = () => {
+interface MyProps {
+  children: ReactNode;
+  onClick: any
+}
+
+const ListItem: React.SFC<MyProps> = (props) => {
     return (
-      <li className="App">
-         list item ui
-      </li>
+      <StyledListItem onClick={props.onClick}>
+         {props.children}
+      </StyledListItem>
     );
   }
   

@@ -1,10 +1,14 @@
-import React from 'react';
-import styled from 'styled-components'
+import React, { ReactNode } from 'react';
+import {StyledList} from './Styled';
 
-const List: React.SFC  = () => {
+interface MyProps {
+  children: ReactNode
+}
+
+const List: React.SFC<MyProps> = (props) => {
     return (
-      <ul className="App">
-         list ui
+      <ul>
+         {props.children}
       </ul>
     );
   }

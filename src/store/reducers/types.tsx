@@ -1,6 +1,7 @@
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMER = 'GET_CUSTOMER';
-export const SAVE_CUSTOMER = 'SAVE_CUSTOMER';
+export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
+export const SAVE_NEW_CUSTOMER = 'SAVE_NEW_CUSTOMER';
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMERS';
 
 export interface PageState {
@@ -38,8 +39,18 @@ interface GetCustomerAction {
     }
 }
 
-interface SaveCustomerAction {
-    type: typeof SAVE_CUSTOMER;
+interface SaveNewCustomerAction {
+    type: typeof SAVE_NEW_CUSTOMER;
+    payload: {
+        firstName: string;
+        lastName :string;
+        dateOfBirth: Date;
+    }
+}
+
+
+interface UpdateCustomerAction {
+    type: typeof UPDATE_CUSTOMER;
     payload: {
         id: string;
         firstName: string;
@@ -57,5 +68,6 @@ interface DeleteCustomerAction {
 
 export type CustomerActionTypes = GetCustomersAction | 
     GetCustomerAction | 
-    SaveCustomerAction | 
+    SaveNewCustomerAction | 
+    UpdateCustomerAction |
     DeleteCustomerAction;

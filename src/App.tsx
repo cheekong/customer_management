@@ -20,7 +20,7 @@ class App extends React.Component<PropsType> {
       <Switch>
         <Route path="/new" component={NewCustomer} />
         <Route path="/list" exact component={CustomerList} />
-        <Route path="/customer:id" exact component={Customer} />
+        <Route path="/customer" exact component={Customer} />
         <Route path="/" exact component={CustomerList} />
         <Redirect to="/" />
       </Switch>

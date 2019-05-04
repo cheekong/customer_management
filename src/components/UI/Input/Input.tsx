@@ -1,41 +1,33 @@
 import React from 'react';
-import styled from 'styled-components'
 
-type MyProps = {
-    type: string,
-    label: string,
-    placeholder?: string,
-    value?: string | number | boolean,
-    onChange?: (e: React.FormEvent<HTMLInputElement>) => void
+import {StyledWrapper, StyledInput, StyledLabel} from './styled';
+
+type TextProps = {
+    type: string;
+    label: string;
+    placeholder: string;
+    value: string;
+    onChange: any;
 }
 
-const Input: React.SFC<MyProps> = (props) => {
-
-    const Wrapper = styled.div `
-        width: 100%;
-        margin-top:10px;
-        margin-bottom:10px;
-        border: 1px solid lightgray;
-        height:40px;
-        text-indent: 20px;
-    `
-
-    const StyledLabel = styled.label `
-
-    `
-
-    const StyledInput = styled.input `
-
-    `
+const Input: React.SFC<TextProps> = (props) => {
 
     //unlikely in this app but still good to prevent collision.
-    const id = props.label  + '_' + Math.random().toString();
+    const id = props.label;
 
     return (
-        <Wrapper>
-            <StyledLabel htmlFor={id}>{props.label}</StyledLabel>
-            <StyledInput id={id} type={props.type} placeholder={props.placeholder} onChange={props.onChange}/>
-        </Wrapper>
+        <StyledWrapper>
+            <StyledLabel htmlFor={props.label}>
+                {props.label}
+            </StyledLabel>
+            <StyledInput 
+                id={props.label} 
+                type={props.type}
+                value={props.value}
+                placeholder={props.placeholder} 
+                onChange={props.onChange}
+            />
+        </StyledWrapper>
         
     );
   }

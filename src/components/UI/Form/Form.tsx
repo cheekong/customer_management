@@ -1,19 +1,15 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components'
+
+import StyledForm from './styled';
 
 type MyProps = {
   title: string,
   children: ReactNode
     //TODO: ADJUST FOR TYPE SUBMIT
-  onSubmit?: any
+  //onSubmit?: any
 }
 
 const Form: React.SFC<MyProps>  = (props) => {
-
-  const StyledForm = styled.form `
-  
-  `
-
   return (
     <StyledForm>
         <h1>{props.title}</h1>

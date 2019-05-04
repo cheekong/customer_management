@@ -1,31 +1,40 @@
 import * as actionTypes from './actionTypes';
-import { CustomerActionTypes } from '../reducers/types';
+import { 
+    GET_CUSTOMERS,
+    GET_CUSTOMER,
+    UPDATE_CUSTOMER,
+    SAVE_NEW_CUSTOMER,
+    DELETE_CUSTOMER,
+    CustomerActionTypes, 
+    CustomerState 
+} from '../reducers/types';
+
 
 export const getCustomers = ():CustomerActionTypes => {
     return {
-        type: actionTypes.GET_CUSTOMERS
+        type: GET_CUSTOMERS
     }
 }
 
+//TODO: remove. pass state instead
 export const getCustomer = (id: string):CustomerActionTypes => {
     return {
-        type: actionTypes.GET_CUSTOMER,
+        type: GET_CUSTOMER,
         payload: {
             id: id
         }
     }
 }
 
-export const saveCustomer = (
+export const updateCustomer = (
     id: string, 
-    firstName: 
-    string, 
+    firstName: string, 
     lastName: string, 
     dateOfBirth: Date
 ):CustomerActionTypes => {
     global.console.log('test');
     return {
-        type: actionTypes.SAVE_CUSTOMER,
+        type: UPDATE_CUSTOMER,
         payload: {
             id: id,
             firstName: firstName,
@@ -42,9 +51,8 @@ export const saveNewCustomer = (
     dateOfBirth: Date
 ):CustomerActionTypes => {
     return {
-        type: actionTypes.SAVE_CUSTOMER,
+        type: SAVE_NEW_CUSTOMER,
         payload: {
-            id: Math.random().toString(),
             firstName: firstName,
             lastName: lastName,
             dateOfBirth: dateOfBirth
@@ -52,7 +60,9 @@ export const saveNewCustomer = (
     }
 }
 
-export const deleteCustomer = (id: string):CustomerActionTypes => {
+export const deleteCustomer = (
+    id: string
+):CustomerActionTypes => {
     return {
         type: actionTypes.DELETE_CUSTOMER,
         payload: {
