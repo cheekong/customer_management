@@ -14,9 +14,30 @@ export const getCustomer = (id: string) => {
 }
 
 export const saveCustomer = (id: string, firstName: string, lastName: string, dateOfBirth: Date) => {
+    global.console.log('test');
     return {
         type: actionTypes.SAVE_CUSTOMER,
-        id: id
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth
+    }
+}
+
+export const saveNewCustomer = (firstName: string, lastName: string, dateOfBirth: Date) => {
+    return(dispatch: any, getState: any) =>  {
+        //TODO: improve on this.
+        const id = Math.random().toString();
+
+        dispatch(saveCustomer(id, firstName, lastName, dateOfBirth));
+    }
+
+
+    return {
+        type: actionTypes.SAVE_CUSTOMER,
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth
     }
 }
 

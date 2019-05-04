@@ -16,30 +16,33 @@ const initialState = {
     },
     ui: {
         customerList: {
-            state: 'LOADING'
+            state: 'LOADING',
+            errorMessage: ''
         },
         customer: {
-            state: 'LOADING'
+            state: 'LOADING',
+            errorMessage: ''
         },
         newCustomer: {
-            state: 'LOADING'
+            state: 'LOADING',
+            errorMessage: ''
         }
     }
 }
 
-const getCustomers = (state: object, action: object) => {
+const getCustomers = (state: object, action: action) => {
     return({});
 }
 
-const getCustomer = (state: object, action: object) => {
+const getCustomer = (state: object, action: action) => {
     return({});
 }
 
-const saveCustomer = (state: object, action: object) => {
-    return({});
+const saveCustomer = (state: object, action: action) => {
+    return({...state});
 }
 
-const deleteCustomer = (state: object, action: object) => {
+const deleteCustomer = (state: object, action: action) => {
     return({});
 }
 

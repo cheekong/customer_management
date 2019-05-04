@@ -2,5 +2,6 @@ export {
     getCustomers,
     getCustomer,
     deleteCustomer,
-    saveCustomer
+    saveCustomer,
+    saveNewCustomer
 } from './customer';

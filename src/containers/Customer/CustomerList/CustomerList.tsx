@@ -22,7 +22,11 @@ class CustomerList extends React.Component<MyProps, MyState> {
         return (
             <div className="App">
                customer list obj
-               <Button onClick={this.handleAddNew}>
+               <Button 
+                    variant='default'
+                    color='primary'
+                    onClick={this.handleAddNew}
+                >
                     Add New Customer
                 </Button>
             </div>
