@@ -1,49 +1,62 @@
 import * as actionTypes from './actionTypes';
+import { CustomerActionTypes } from '../reducers/types';
 
-export const getCustomers = () => {
+export const getCustomers = ():CustomerActionTypes => {
     return {
         type: actionTypes.GET_CUSTOMERS
     }
 }
 
-export const getCustomer = (id: string) => {
+export const getCustomer = (id: string):CustomerActionTypes => {
     return {
-        type: actionTypes.GET_CUSTOMERS,
-        id: id
+        type: actionTypes.GET_CUSTOMER,
+        payload: {
+            id: id
+        }
     }
 }
 
-export const saveCustomer = (id: string, firstName: string, lastName: string, dateOfBirth: Date) => {
+export const saveCustomer = (
+    id: string, 
+    firstName: 
+    string, 
+    lastName: string, 
+    dateOfBirth: Date
+):CustomerActionTypes => {
     global.console.log('test');
     return {
         type: actionTypes.SAVE_CUSTOMER,
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        dateOfBirth: dateOfBirth
+        payload: {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth
+        }
     }
 }
 
-export const saveNewCustomer = (firstName: string, lastName: string, dateOfBirth: Date) => {
-    return(dispatch: any, getState: any) =>  {
-        //TODO: improve on this.
-        const id = Math.random().toString();
-
-        dispatch(saveCustomer(id, firstName, lastName, dateOfBirth));
-    }
-
-
+//TODO: look into redux-thunk typescript
+export const saveNewCustomer = (
+    firstName: string, 
+    lastName: string, 
+    dateOfBirth: Date
+):CustomerActionTypes => {
     return {
         type: actionTypes.SAVE_CUSTOMER,
-        firstName: firstName,
-        lastName: lastName,
-        dateOfBirth: dateOfBirth
+        payload: {
+            id: Math.random().toString(),
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth
+        }
     }
 }
 
-export const deleteCustomer = (id: string) => {
+export const deleteCustomer = (id: string):CustomerActionTypes => {
     return {
         type: actionTypes.DELETE_CUSTOMER,
-        id: id
+        payload: {
+            id: id
+        }
     }
 }
