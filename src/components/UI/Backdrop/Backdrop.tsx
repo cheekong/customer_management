@@ -1,11 +1,15 @@
-import React from 'react';
-import styled from 'styled-components'
+import React, { ReactNode } from 'react';
+import { StyledBackdrop } from './Styled';
 
-const Backdrop: React.SFC  = () => {
+interface MyProps {
+  children: ReactNode
+}
+
+const Backdrop: React.SFC<MyProps>  = (props) => {
     return (
-      <div className="App">
-         back
-      </div>
+      <StyledBackdrop>
+         {props.children}
+      </StyledBackdrop>
     );
   }
   

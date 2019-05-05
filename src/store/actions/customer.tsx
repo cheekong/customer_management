@@ -1,11 +1,12 @@
-import * as actionTypes from './actionTypes';
 import { 
     GET_CUSTOMERS,
     GET_CUSTOMER,
     UPDATE_CUSTOMER,
     SAVE_NEW_CUSTOMER,
     DELETE_CUSTOMER,
+    RESET_UI_STATE,
     CustomerActionTypes, 
+    SEARCH,
     CustomerState 
 } from '../reducers/types';
 
@@ -14,7 +15,7 @@ export const getCustomers = ():CustomerActionTypes => {
     return {
         type: GET_CUSTOMERS
     }
-}
+};
 
 //TODO: remove. pass state instead
 export const getCustomer = (id: string):CustomerActionTypes => {
@@ -24,7 +25,7 @@ export const getCustomer = (id: string):CustomerActionTypes => {
             id: id
         }
     }
-}
+};
 
 export const updateCustomer = (
     id: string, 
@@ -42,7 +43,7 @@ export const updateCustomer = (
             dateOfBirth: dateOfBirth
         }
     }
-}
+};
 
 //TODO: look into redux-thunk typescript
 export const saveNewCustomer = (
@@ -58,15 +59,37 @@ export const saveNewCustomer = (
             dateOfBirth: dateOfBirth
         }
     }
-}
+};
 
 export const deleteCustomer = (
     id: string
 ):CustomerActionTypes => {
     return {
-        type: actionTypes.DELETE_CUSTOMER,
+        type: DELETE_CUSTOMER,
         payload: {
             id: id
+        }
+    }
+};
+
+export const resetUIState = (
+    target: string
+): CustomerActionTypes => {
+    return {
+        type: RESET_UI_STATE,
+        payload: {
+            target: target
+        }
+    }
+};
+
+export const search = (
+    searchText: string
+): CustomerActionTypes => {
+    return {
+        type: SEARCH,
+        payload: {
+            searchText: searchText
         }
     }
 }

@@ -3,5 +3,7 @@ export {
     getCustomer,
     deleteCustomer,
     updateCustomer,
-    saveNewCustomer
+    saveNewCustomer,
+    resetUIState,
+    search
 } from './customer';

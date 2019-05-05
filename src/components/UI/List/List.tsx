@@ -7,9 +7,9 @@ interface MyProps {
 
 const List: React.SFC<MyProps> = (props) => {
     return (
-      <ul>
+      <StyledList>
          {props.children}
-      </ul>
+      </StyledList>
     );
   }
   

@@ -7,9 +7,9 @@ type MyProps = {
 
 const Navigation: React.SFC<MyProps> = (props) => {
     return (
-      <div className="App">
+      <nav>
          {props.children}
-      </div>
+      </nav>
     );
   }
   

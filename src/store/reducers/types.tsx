@@ -3,10 +3,14 @@ export const GET_CUSTOMER = 'GET_CUSTOMER';
 export const UPDATE_CUSTOMER = 'UPDATE_CUSTOMER';
 export const SAVE_NEW_CUSTOMER = 'SAVE_NEW_CUSTOMER';
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMERS';
+export const RESET_UI_STATE = 'RESET_UI_STATE';
+export const SEARCH = 'SEARCH';
+
 
 export interface PageState {
     state: string;
-    errorMessage: string
+    errorMessage: string;
+    action: string;
 }
 
 export interface Customer {
@@ -66,8 +70,24 @@ interface DeleteCustomerAction {
     }
 }
 
+interface ResetUIStateAction {
+    type: typeof RESET_UI_STATE;
+    payload: {
+        target: string;
+    }
+}
+
+interface SearchAction {
+    type: typeof SEARCH;
+    payload: {
+        searchText: string;
+    }
+}
+
 export type CustomerActionTypes = GetCustomersAction | 
     GetCustomerAction | 
     SaveNewCustomerAction | 
     UpdateCustomerAction |
-    DeleteCustomerAction;
+    DeleteCustomerAction |
+    ResetUIStateAction |
+    SearchAction;

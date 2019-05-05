@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 
+import PageContainer from '../../hoc/PageContainer/PageContainer';
 import Toolbar from '../../components/Toolbar/Toolbar';
 import Navigation from '../../components/Navigation/Navigation';
 import NavigationItem from '../../components/Navigation/NavigationItem/NavigationItem';
@@ -22,9 +23,9 @@ class Layout extends React.Component<MyProps, MyState> {
                         <NavigationItem to='/list'>List</NavigationItem>
                     </Navigation >
                 </Toolbar>
-                <main>
+                <PageContainer>
                     {this.props.children}
-                </main>
+                </PageContainer>
             </div>
           );
     }

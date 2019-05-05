@@ -2,11 +2,14 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux'
 
+import Searchbar from '../../../components/Searchbar/Searchbar';
+import Input from '../../../components/UI/Input/Input'
 import Button from '../../../components/UI/Button/Button';
 import Form from '../../../components/UI/Form/Form';
 import List from '../../../components/UI/List/List';
 import ListItem from '../../../components/UI/List/ListItem/ListItem';
 import * as actionCreators from '../../../store/actions/index';
+import * as utilities from '../../../utilities/utilities';
 
 interface MyProps extends RouteComponentProps<any> {
     getCustomers():  any;
@@ -21,25 +24,43 @@ type MyState = {
             lastName: string;
             dateOfBirth: Date;
         }
+    },
+    uiState: {
+        searchText: string
+        searchResult: {
+            [id: string]: {
+                id: string;
+                firstName: string;
+                lastName: string;
+                dateOfBirth: Date;
+            }
+        }
     }
 }
 
 type Customers = {
-    customers: {
         [id: string]: {
             id: string;
             firstName: string;
             lastName: string;
             dateOfBirth: Date;
         }
+    /*,
+    uiState: {
+        searchText: '',
+        searchResult:
     }
+    */
 }
 
 
 class CustomerList extends React.Component<MyProps, MyState> {
     state = {
         customers: {},
-        test: 'test'
+        uiState: {
+            searchText: '',
+            searchResult: {}
+        }
     }
 
     handleAddNew = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,24 +69,54 @@ class CustomerList extends React.Component<MyProps, MyState> {
     }
 
     handleViewCustomer = (id: string) => {
-global.console.log('id',id);
-global.console.log('this.props.customers.byId',this.props.customers.byId);
-global.console.log('this.props.customers.byId[id]',this.props.customers.byId[id]);
         this.props.history.push({
             pathname: '/customer',
             state: {customer: this.props.customers.byId[id]}
         })
+    };
+
+    handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        let newUIState = {...this.state.uiState};
+        newUIState.searchText = value;
+        this.setState({uiState: newUIState})
+    }
+
+    handleCancelSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        let newState = utilities.copySimpleObject(this.state);
+        newState.uiState.searchText = '';
+        newState.uiState.searchResult = {};
+        this.setState(newState);
+    }
+
+    searchCustomer = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const customers = this.props.customers.byId;
+        const keys = Object.keys(customers);
+        let matchedCustomers = {};
+        
+        for(let key of keys){
+            const lowercaseSeachText = this.state.uiState.searchText.toLowerCase();
+            let customer = customers[key];
+            const fullname = customer.firstName + ' ' + customer.lastName;
+            if(fullname.toLowerCase().includes(lowercaseSeachText)){
+                //@ts-ignore
+                matchedCustomers[key] = customer;
+            }
+        }
+
+        let newState = utilities.copySimpleObject(this.state);
+        newState.uiState.searchResult = matchedCustomers
+        newState.uiState.searchFound = true;
+        this.setState(newState);
     }
 
     buildList = (dataSource:Customers ) => {
-global.console.log('dataSource',dataSource);
         let content = null;
         let keys = Object.keys(dataSource);
         if(keys.length){
             let listItems = [];
             for(let key of keys){
-                //@ts-ignore
-                global.console.log('data', dataSource[key]);
                 //@ts-ignore
                 let customer = dataSource[key];
                 listItems.push(
@@ -73,31 +124,43 @@ global.console.log('dataSource',dataSource);
                         <p>{customer.firstName + ' ' + customer.lastName} </p>
                     </ListItem>
                 )
-global.console.log('li item', listItems);
             }
             content = (
-                <Form title='Customers'>
-                    TEST
-                    <List>
-                        {listItems}
-                    </List>
-                </Form>
+                <List>
+                    {listItems}
+                </List>
             )
         }
-        global.console.log('content', content);
         return content;
-    }
-
-    componentDidMount(){
-        const test = this.props.getCustomers();
-        global.console.log('test',test);
     }
     
     render(){
-global.console.log('customers', this.props.customers);
-        const customerList = this.buildList(this.props.customers.byId)
+        let customerList = null;
+        const searchResult = this.state.uiState.searchResult;
+        if(Object.entries(searchResult).length > 0 && 
+            searchResult.constructor === Object
+        ){
+            customerList = this.buildList(searchResult);
+        } else {
+            customerList = this.buildList(this.props.customers.byId);
+        }
+
+        let searchbarComponent = null;
+        if(Object.keys(this.props.customers.byId).length){
+            searchbarComponent = (
+                <Searchbar 
+                    value={this.state.uiState.searchText}
+                    placeholder='Search for customers by name'
+                    onChange={this.handleSearchText}
+                    onClick={this.searchCustomer}
+                    onCancel={this.handleCancelSearch}
+                />
+            )
+        }
+        
         return (
-            <div className="App">
+            <Form title='Customers'>
+                {searchbarComponent}
                 {customerList}
                <Button 
                     variant='default'
@@ -106,7 +169,7 @@ global.console.log('customers', this.props.customers);
                 >
                     Add New Customer
                 </Button>
-            </div>
+            </Form>
           );
     }
 }

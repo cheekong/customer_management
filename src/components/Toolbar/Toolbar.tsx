@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import styled from 'styled-components'
+import {StyledToolbar, StyledToolbarCenter} from './Styled'
 
 type MyProps = {
   children: ReactNode
@@ -7,9 +7,11 @@ type MyProps = {
 
 const Toolbar: React.SFC<MyProps> = (props) => {
     return (
-      <div className="toolbar">
-         {props.children}
-      </div>
+      <StyledToolbar>
+        <StyledToolbarCenter>
+          {props.children}
+        </StyledToolbarCenter>
+      </StyledToolbar>
     );
   }
   

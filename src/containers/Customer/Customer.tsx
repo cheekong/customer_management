@@ -2,19 +2,35 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux'
 
+import Modal from '../../components/Modal/Modal';
 import Form from '../../components/UI/Form/Form';
+import DisplayField from '../../components/DisplayField/DisplayField';
 import Input from '../../components/UI/Input/Input';
-import DateInput from '../../components/UI/Input/DateInput';
+import DateInput from '../../components/UI/Input/DateInput/DateInput';
 import Button from '../../components/UI/Button/Button';
 import * as actionCreators from '../../store/actions/index';
 
 interface MyProps extends RouteComponentProps<any>{
+    uiState: string;
+    pageAction: string;
+    errorMessage: string;
     id: string; 
     firstName: string;
     lastName: string;
     dateOfBirth: Date;
     //FIXME: find out the real return.
-    updateCustomer(arg1: string, arg2: string, args3: string, arg4: Date):  any
+    updateCustomer(
+        arg1: string, 
+        arg2: string, 
+        args3: string, 
+        arg4: Date
+    ):  any;
+    resetUIState(
+        target: string
+    ): any;
+    deleteCustomer(
+        id: string
+    ): any;
 }
 
 type MyState = {
@@ -81,26 +97,44 @@ class Customer extends React.Component<MyProps, MyState> {
         this.setState({edit: !this.state.edit})
     }
 
+    handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.props.deleteCustomer(this.props.history.location.state.customer.id);
+    }
+
     componentDidMount() {
-        global.console.log('props', this.props.history.location.state)
-        const customer = this.props.history.location.state.customer;
-        let newCustomerState = {...this.state.customer};
-        newCustomerState = {
-            id: customer.id,
-            firstName: customer.firstName,
-            lastName: customer.lastName,
-            dateOfBirth: new Date(customer.dateOfBirth)
+        this.props.resetUIState('customer');
+
+        if(this.props.history.location.state.customer){
+            const customer = this.props.history.location.state.customer;
+            let newCustomerState = {...this.state.customer};
+            newCustomerState = {
+                id: customer.id,
+                firstName: customer.firstName,
+                lastName: customer.lastName,
+                dateOfBirth: new Date(customer.dateOfBirth)
+            }
+            this.setState({customer: newCustomerState});
+        } else {
+            this.props.history.push('/list')
         }
-        this.setState({customer: newCustomerState});
     }
 
     render(){
-global.console.log('state', this.state);
         let content = (
-            <Form title='View Customer'>
-                <p>Firstname: {this.state.customer.firstName}</p>
-                <p>Lastname: {this.state.customer.lastName}</p>
-                <p>Date of Birth: {this.state.customer.dateOfBirth.toDateString()}</p>
+            <>
+                <DisplayField 
+                    label='Firstname'
+                    pararapgh={this.state.customer.firstName}
+                />
+                <DisplayField 
+                    label='Lastname'
+                    pararapgh={this.state.customer.lastName}
+                />
+                <DisplayField 
+                    label='Date of Birth'
+                    pararapgh={this.state.customer.dateOfBirth.toLocaleDateString()}
+                />
                 <Button 
                     type='button'
                     variant='default' 
@@ -110,62 +144,108 @@ global.console.log('state', this.state);
                     Edit
                 </Button>
                <Button 
-                    variant='default' 
+                    variant='outline' 
                     color='primary' 
                     onClick={this.handleCancel}
                 >
                     Cancel
                 </Button>
-            </Form>
+                <Button 
+                    variant='warning' 
+                    color='primary' 
+                    onClick={this.handleDelete}
+                >
+                    Delete
+                </Button>
+            </>
         )
         if(this.state.edit){
             content = (
-                <Form title='Edit Customer'>
-               <Input 
-                    type='text' 
-                    label='Fistname' 
-                    value={this.state.customer.firstName}
-                    placeholder='firstName'
-                    onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
-                />
-               <Input 
-                    type='text' 
-                    label='Lastname' 
-                    value={this.state.customer.lastName}
-                    placeholder='Lastname'
-                    onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleLastNameOnChange(e, 'lastName')}
-                />
-                <DateInput 
-                    label='Date of Birth'
-                    value={this.state.customer.dateOfBirth}
-                    onChange={(e: any ) => this.handleDateOnChange(e, 'lastName')}
-                />
+                <>
+                    <Input 
+                        type='text' 
+                        label='Fistname' 
+                        value={this.state.customer.firstName}
+                        placeholder='firstName'
+                        onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
+                    />
+                    <Input 
+                        type='text' 
+                        label='Lastname' 
+                        value={this.state.customer.lastName}
+                        placeholder='Lastname'
+                        onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleLastNameOnChange(e, 'lastName')}
+                    />
+                    <DateInput 
+                        label='Date of Birth'
+                        value={this.state.customer.dateOfBirth}
+                        onChange={(e: any ) => this.handleDateOnChange(e, 'lastName')}
+                    />
+                    <Button 
+                        type='button'
+                        variant='default' 
+                        color='primary'
+                        onClick={this.handleSubmit}
+                    >
+                        Save
+                    </Button>
+                    <Button 
+                        variant='default' 
+                        color='primary' 
+                        onClick={this.handleCancel}
+                    >
+                        Cancel
+                    </Button>
+                </>
+            )
+        }
+
+        let modalConfig = {
+            show: false,
+            message: '',
+            title: ''
+        };
+        let warning = null;
+        if(this.props.uiState === 'COMPLETED'){
+            modalConfig.show = true;
+
+            if(this.props.pageAction === 'DELETE'){
+                modalConfig.message = 'Successfully deleted ' + this.state.customer.firstName + ' ' + this.state.customer.lastName;
+            } else if (this.props.pageAction === 'SAVE'){
+                modalConfig.message = 'Successfully updated ' + this.state.customer.firstName + ' ' + this.state.customer.lastName;
+            }
+        } else if (this.props.uiState === 'ERROR'){
+            warning = <p>{this.props.errorMessage}</p>
+        }
+global.console.log('errorMessage',this.props.errorMessage);
+        return (
+            <>
+            <Modal 
+                title={modalConfig.title}  
+                show={modalConfig.show} 
+            >
                 <Button 
-                    type='button'
-                    variant='default' 
-                    color='primary'
-                    onClick={this.handleSubmit}
-                >
-                    Save
-                </Button>
-               <Button 
                     variant='default' 
                     color='primary' 
                     onClick={this.handleCancel}
                 >
-                    Cancel
+                    OK
                 </Button>
+            </Modal>
+            <Form title={this.state.edit? 'Edit Customer' : 'View Customer'}>
+                {warning}
+                {content}
             </Form>
-            )
-        }
-        return content;
+            </>
+        );
     }
 }
 
 const mapStateToProps = (state: any) => {
     return {
       uiState: state.customer.ui.customer.state,
-      error: state.customer.ui.customer.errorMessage
+      pageAction: state.customer.ui.customer.action,
+      errorMessage: state.customer.ui.customer.errorMessage
     }
   }
 
@@ -175,7 +255,22 @@ const mapDispatchToProps = (dispatch: any) => ({
         firstName: string, 
         lastName: string, 
         dateOfBirth: Date
-    ) => dispatch(actionCreators.updateCustomer(id, firstName, lastName, dateOfBirth))
+    ) => dispatch(actionCreators.updateCustomer(
+        id, 
+        firstName, 
+        lastName, 
+        dateOfBirth
+    )),
+    resetUIState: (
+        target: string
+    ) => dispatch(actionCreators.resetUIState(
+        target
+    )),
+    deleteCustomer: (
+        id: string
+    ) => dispatch(actionCreators.deleteCustomer(
+        id
+    ))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Customer)

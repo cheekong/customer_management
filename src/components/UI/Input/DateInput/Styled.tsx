@@ -18,7 +18,7 @@ export const StyledLabel = styled.label `
 
 export const StyledInput = styled.input `
 
-    height: 100%;
+    
     margin: 0;
     padding: 0
     border: 0;
@@ -27,3 +27,8 @@ export const StyledInput = styled.input `
     text-indent:  10px;
     background-color: #f5f5f5;
 `
+
+
+export const StyledDatePicker = (datePicker: any) => styled(datePicker) `
+    height: 100%;
+`;

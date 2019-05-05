@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components'
+import {StyledNavigationItem} from './Styled';
 
 type MyProps = {
   to: string,
@@ -8,10 +8,14 @@ type MyProps = {
 }
 
 const NavigationItem: React.SFC<MyProps> = (props) => {
+
+    const StyledNavLink = StyledNavigationItem(NavLink);
     return (
-      <NavLink to={props.to}>
-         {props.children}
-      </NavLink>
+      
+        <StyledNavLink to={props.to}>
+          {props.children}
+        </StyledNavLink>
+
     );
   }
   

@@ -1,6 +1,7 @@
 import React from 'react';
 import DatePicker from "react-datepicker";
-import styled from 'styled-components'
+import '../../../../../node_modules/react-datepicker/dist/react-datepicker.css'; //Seems to have trouble with the css. had to manually import it.
+import { StyledWrapper, StyledLabel, StyledDatePicker} from './Styled'
 
 type DateProps = {
     label: string;
@@ -9,34 +10,21 @@ type DateProps = {
 }
 
 const Input: React.SFC<DateProps> = (props) => {
-
-    const Wrapper = styled.div `
-        width: 100%;
-        margin-top:10px;
-        margin-bottom:10px;
-        border: 1px solid lightgray;
-        height:40px;
-        text-indent: 20px;
-    `
-
-    const StyledLabel = styled.label `
-
-    `
-
     const id = props.label;
-
+    const StyledDatePicker2 = StyledDatePicker(DatePicker);
     return (
-        <Wrapper>
+        <StyledWrapper>
             <StyledLabel 
                 htmlFor={id}
             >
                 {props.label}
             </StyledLabel>
-            <DatePicker 
+            <StyledDatePicker2 
+                maxDate={new Date()}
                 selected={props.value}
                 onChange={props.onChange}
             />
-        </Wrapper>
+        </StyledWrapper>
         
     );
   }

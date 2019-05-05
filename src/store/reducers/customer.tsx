@@ -4,6 +4,8 @@ import {
     UPDATE_CUSTOMER,
     SAVE_NEW_CUSTOMER,
     DELETE_CUSTOMER,
+    RESET_UI_STATE,
+    SEARCH,
     CustomerActionTypes, 
     CustomerState 
 } from './types';
@@ -17,15 +19,18 @@ const initialState: CustomerState = {
     ui: {
         customerList: {
             state: 'LOADING',
-            errorMessage: ''
+            errorMessage: '',
+            action: ''
         },
         customer: {
             state: 'LOADING',
-            errorMessage: ''
+            errorMessage: '',
+            action: ''
         },
         newCustomer: {
             state: 'LOADING',
-            errorMessage: ''
+            errorMessage: '',
+            action: ''
         }
     }
 }
@@ -34,7 +39,8 @@ const getCustomers = (
     state: CustomerState, 
     action: CustomerActionTypes
 ) => {
-    return(state);
+    global.console.log('getCust', state)
+    return state;
 }
 
 const getCustomer = (
@@ -51,18 +57,39 @@ const updateCustomer = (
     lastName: string, 
     dateOfBirth: Date
 ) => {
+    const trimmedfirstName = firstName.trim();
+    const trimmedlastName = lastName.trim();
     let newState = JSON.parse(JSON.stringify(state));
-    const customerExists = newState.customers.allIds.filter((id: string) => id === id);
-    if(customerExists){
-        newState.customer.byId[id] = {
-            firstName: firstName,
-            lastName: lastName,
-            dateOfBirth: dateOfBirth
-        };
-    } else {
-        newState.ui.newCustomer.state = 'LOADED';
-        newState.ui.newCustomer.errorMessage = 'User not found. Please try again.';
+
+    let errorMessage = '';
+    if(trimmedfirstName.length === 0){
+        errorMessage = 'Firstname can not be empty.';
+    } else if (trimmedlastName.length === 0){
+        errorMessage = 'Lastname can not be empty.';
     }
+
+    if(errorMessage.length === 0){
+        newState.ui.customer.action = 'UPDATE';
+        const customerExists = newState.customers.allIds.includes(id);
+        if(customerExists){
+            newState.customers.byId[id] = {
+                id: id,
+                firstName: firstName,
+                lastName: lastName,
+                dateOfBirth: dateOfBirth
+            };
+            newState.ui.customer.state = 'COMPLETED';
+            newState.ui.customer.errorMessage = '';
+        } else {
+            newState.ui.customer.state = 'ERROR';
+            newState.ui.customer.errorMessage = 'User not found. Please try again.';
+        }
+    } else {
+        newState.ui.customer.state = 'ERROR';
+        newState.ui.customer.errorMessage = errorMessage;
+    }
+        
+global.console.log('update newState',newState)
     return newState;
 }
 
@@ -72,24 +99,42 @@ const saveNewCustomer = (
     lastName: string, 
     dateOfBirth: Date
 ) => {
-    let newState = JSON.parse(JSON.stringify(state));
-    const id = utilities.generateId();
 
-    const customerExists = newState.customers.allIds.filter((existingId: string) => existingId === id);
-global.console.log('customerExists',customerExists);
-global.console.log('customerExists',customerExists);
-    if(customerExists.length === 0){
-        newState.customers.allIds.push(id);
-        newState.customers.byId[id] = {
-            firstName: firstName,
-            lastName: lastName,
-            dateOfBirth: dateOfBirth
+    const trimmedfirstName = firstName.trim();
+    const trimmedlastName = lastName.trim();
+    let newState = JSON.parse(JSON.stringify(state));
+
+    let errorMessage = '';
+    if(trimmedfirstName.length === 0){
+        errorMessage = 'Firstname can not be empty.';
+    } else if (trimmedlastName.length === 0){
+        errorMessage = 'Lastname can not be empty.';
+    }
+
+    if(errorMessage.length === 0){
+        newState.ui.newCustomer.action = 'SAVE';
+        const id = utilities.generateId();
+        const customerExists = newState.customers.allIds.includes(id);
+
+        if(!customerExists){
+            newState.customers.allIds.push(id);
+            newState.customers.byId[id] = {
+                id: id,
+                firstName: trimmedfirstName,
+                lastName: trimmedlastName,
+                dateOfBirth: dateOfBirth
+            }
+            newState.ui.newCustomer.state = 'COMPLETED';
+            newState.ui.newCustomer.errorMessage = '';
+        } else {
+            newState.ui.newCustomer.state = 'ERROR';
+            newState.ui.newCustomer.errorMessage = 'Please try again. Unexpected error has occured';
         }
     } else {
-        newState.ui.newCustomer.state = 'LOADED';
-        newState.ui.newCustomer.errorMessage = 'Please try again. Unexpected error has occured';
+        newState.ui.newCustomer.state = 'ERROR';
+        newState.ui.newCustomer.errorMessage = errorMessage;
     }
-    global.console.log('test state', newState);
+
     return newState;
 }
 
@@ -97,14 +142,45 @@ const deleteCustomer = (
     state: CustomerState, 
     id: string
 ) => {
-    let newState = JSON.parse(JSON.stringify(state));
-    const exists = newState.customers.allIds.filter((id: string) => id === id)
+    let newState = utilities.copySimpleObject(state);
+    newState.ui.customer.action = 'DELETE';
+
+    const exists = newState.customers.allIds.includes(id);
     if(exists){
-        let {removedCustomer, ...rest} = newState.customers.byId;
-        newState.customers.allIds = newState.customers.allIds.filter((id: string) => id !== id)
-        newState.customers.byId = rest;
+        delete newState.customers.byId[id];
+        const indexToRemove = newState.customers.allIds.indexOf(id);
+        newState.customers.allIds = newState.customers.allIds.splice(indexToRemove, 1)
+        newState.ui.customer.state = 'COMPLETED';
+        newState.ui.customer.errorMessage ='';
     }
+
     return newState;
+}
+
+const resetUIState = (
+    state: CustomerState, 
+    target: string
+) => {
+    const uiStateToReset:{[key:string]:boolean} = {
+        'newCustomer': true,
+        'customer': true,
+        'customerList': true
+    }
+    if(uiStateToReset[target]){
+        let newState = utilities.copySimpleObject(state);
+        const initialPageUIState = utilities.copySimpleObject(initialState.ui[target]);
+        newState.ui[target] = initialPageUIState;
+        return newState;
+    } else {
+        return state;
+    }
+}
+
+const search = (
+    state: CustomerState, 
+    searchText: string
+) => {
+    return state;
 }
 
 const reducer = (
@@ -122,7 +198,11 @@ const reducer = (
             return updateCustomer( state, action.payload.id, action.payload.firstName, action.payload.lastName, action.payload.dateOfBirth );
         case DELETE_CUSTOMER: 
             return deleteCustomer( state, action.payload.id );
-        default: return state;
+        case RESET_UI_STATE: 
+            return resetUIState( state, action.payload.target );
+        case SEARCH: 
+            return search( state, action.payload.searchText );
+            default: return state;
     }
 }
 

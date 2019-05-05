@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StyledWrapper, StyledInput, StyledLabel} from './styled';
+import {StyledWrapper, StyledInput, StyledLabel} from './Styled';
 
 type TextProps = {
     type: string;
