@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import {StyledForm, StyledFormContent, StyledFormTitle} from './Styled';
 
-type MyProps = {
+interface MyProps {
   title: string,
   children: ReactNode
     //TODO: ADJUST FOR TYPE SUBMIT

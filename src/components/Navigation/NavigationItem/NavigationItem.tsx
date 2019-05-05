@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import { NavLink } from 'react-router-dom';
 import {StyledNavigationItem} from './Styled';
 
-type MyProps = {
+interface MyProps {
   to: string,
   children: ReactNode
 }

@@ -15,7 +15,7 @@ interface MyProps extends RouteComponentProps<any> {
     customers: any
 }
 
-type MyState = {
+interface MyState {
     customers: {
         [id: string]: {
             id: string;
@@ -25,7 +25,8 @@ type MyState = {
         }
     },
     uiState: {
-        searchText: string
+        searchText: string;
+        searchStarted: boolean;
         searchResult: {
             [id: string]: {
                 id: string;
@@ -37,7 +38,7 @@ type MyState = {
     }
 }
 
-type Customers = {
+interface Customers {
     [id: string]: {
         id: string;
         firstName: string;
@@ -46,13 +47,13 @@ type Customers = {
     }
 }
 
-
 class CustomerList extends React.Component<MyProps, MyState> {
     state = {
         customers: {},
         uiState: {
             searchText: '',
-            searchResult: {}
+            searchResult: {},
+            searchStarted: false
         }
     }
 
@@ -79,6 +80,7 @@ class CustomerList extends React.Component<MyProps, MyState> {
         e.preventDefault();
         let newState = utilities.copySimpleObject(this.state);
         newState.uiState.searchText = '';
+        newState.uiState.searchStarted = false;
         newState.uiState.searchResult = {};
         this.setState(newState);
     }
@@ -100,7 +102,7 @@ class CustomerList extends React.Component<MyProps, MyState> {
 
         let newState = utilities.copySimpleObject(this.state);
         newState.uiState.searchResult = matchedCustomers
-        newState.uiState.searchFound = true;
+        newState.uiState.searchStarted = true;
         this.setState(newState);
     }
 
@@ -133,9 +135,8 @@ class CustomerList extends React.Component<MyProps, MyState> {
     render(){
         let customerList = null;
         const searchResult = this.state.uiState.searchResult;
-        if(Object.entries(searchResult).length > 0 && 
-            searchResult.constructor === Object
-        ){
+
+        if(this.state.uiState.searchStarted ){
             customerList = this.buildList(searchResult);
         } else if (Object.entries(this.props.customers.byId).length > 0 && 
             this.props.customers.byId.constructor === Object)

@@ -5,11 +5,11 @@ import Toolbar from '../../components/Toolbar/Toolbar';
 import Navigation from '../../components/Navigation/Navigation';
 import NavigationItem from '../../components/Navigation/NavigationItem/NavigationItem';
 
-type MyProps = {
+interface MyProps {
     children: ReactNode
 }
 
-type MyState = {
+interface MyState {
     customers: object
 }
 

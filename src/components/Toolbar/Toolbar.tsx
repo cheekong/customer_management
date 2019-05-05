@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {StyledToolbar, StyledToolbarCenter} from './Styled'
 
-type MyProps = {
+interface MyProps {
   children: ReactNode
 }
 

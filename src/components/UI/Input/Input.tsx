@@ -2,7 +2,7 @@ import React from 'react';
 
 import {StyledWrapper, StyledInput, StyledLabel} from './Styled';
 
-type TextProps = {
+interface TextProps {
     type: string;
     label: string;
     placeholder: string;

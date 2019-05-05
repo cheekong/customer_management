@@ -8,7 +8,7 @@ import {
     StyledDatePickerWrapper
 } from './Styled'
 
-type DateProps = {
+interface DateProps {
     label: string;
     value: Date;
     onChange: any

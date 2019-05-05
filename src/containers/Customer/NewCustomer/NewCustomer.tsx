@@ -25,7 +25,7 @@ interface MyProps extends RouteComponentProps<any>{
 
 }
 
-type MyState = {
+interface MyState {
     firstName: string,
     lastName: string,
     dateOfBirth: Date

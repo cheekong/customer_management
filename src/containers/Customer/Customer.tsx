@@ -33,7 +33,7 @@ interface MyProps extends RouteComponentProps<any>{
     ): any;
 }
 
-type MyState = {
+interface MyState {
     edit: boolean;
     customer: {
         id: string;

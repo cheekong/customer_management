@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 
-type MyProps = {
+interface MyProps {
   children: ReactNode
 }
 

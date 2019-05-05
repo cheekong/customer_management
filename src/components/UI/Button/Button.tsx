@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
-type MyProps = {
+interface MyProps {
   type?: 'submit' | 'button' | 'reset',
   width?: string;
   height?: string;
@@ -70,6 +70,7 @@ const Button: React.SFC<MyProps> = ({type='button', ...props}) => {
     
     border-radius: 4px;
     font-size:1em;
+    cursor: pointer;
     ${styles}
     ${widthStyles}
     ${sizeStyles}
