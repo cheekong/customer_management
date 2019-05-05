@@ -6,8 +6,7 @@ import {
     DELETE_CUSTOMER,
     RESET_UI_STATE,
     CustomerActionTypes, 
-    SEARCH,
-    CustomerState 
+    SEARCH
 } from '../reducers/types';
 
 
@@ -33,7 +32,6 @@ export const updateCustomer = (
     lastName: string, 
     dateOfBirth: Date
 ):CustomerActionTypes => {
-    global.console.log('test');
     return {
         type: UPDATE_CUSTOMER,
         payload: {

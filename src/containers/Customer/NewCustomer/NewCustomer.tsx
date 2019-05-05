@@ -53,8 +53,6 @@ class NewCustomer extends React.Component<MyProps, MyState> {
     }
 
     handleDateOnChange = (e: any, target: string) => {
-        global.console.log('e',e);
-
         let newState = {...this.state};
         newState.dateOfBirth = e;
         this.setState(newState);

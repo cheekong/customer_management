@@ -1,5 +1,4 @@
 import React, {ReactNode} from 'react';
-import styled from 'styled-components'
 
 type MyProps = {
   children: ReactNode

@@ -3,7 +3,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import Searchbar from '../../../components/Searchbar/Searchbar';
-import Input from '../../../components/UI/Input/Input'
 import Button from '../../../components/UI/Button/Button';
 import Form from '../../../components/UI/Form/Form';
 import List from '../../../components/UI/List/List';
@@ -39,18 +38,12 @@ type MyState = {
 }
 
 type Customers = {
-        [id: string]: {
-            id: string;
-            firstName: string;
-            lastName: string;
-            dateOfBirth: Date;
-        }
-    /*,
-    uiState: {
-        searchText: '',
-        searchResult:
+    [id: string]: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        dateOfBirth: Date;
     }
-    */
 }
 
 
@@ -120,7 +113,10 @@ class CustomerList extends React.Component<MyProps, MyState> {
                 //@ts-ignore
                 let customer = dataSource[key];
                 listItems.push(
-                    <ListItem onClick={() => this.handleViewCustomer(key)}>
+                    <ListItem 
+                        key={key} 
+                        onClick={() => this.handleViewCustomer(key)}
+                    >
                         <p>{customer.firstName + ' ' + customer.lastName} </p>
                     </ListItem>
                 )

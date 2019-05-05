@@ -11,10 +11,6 @@ type TextProps = {
 }
 
 const Input: React.SFC<TextProps> = (props) => {
-
-    //unlikely in this app but still good to prevent collision.
-    const id = props.label;
-
     return (
         <StyledWrapper>
             <StyledLabel htmlFor={props.label}>

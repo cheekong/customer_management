@@ -39,7 +39,6 @@ const getCustomers = (
     state: CustomerState, 
     action: CustomerActionTypes
 ) => {
-    global.console.log('getCust', state)
     return state;
 }
 
@@ -88,8 +87,6 @@ const updateCustomer = (
         newState.ui.customer.state = 'ERROR';
         newState.ui.customer.errorMessage = errorMessage;
     }
-        
-global.console.log('update newState',newState)
     return newState;
 }
 

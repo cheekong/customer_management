@@ -2,8 +2,6 @@ import React, { ReactNode } from 'react';
 
 import Backdrop from '../UI/Backdrop/Backdrop'
 import Form from '../UI/Form/Form';
-import List from '../UI/List/List';
-import ListItem from '../UI/List/ListItem/ListItem';
 import {StyledModal, StyledModalBody} from './Styled';
 
 interface MyProps {
