@@ -141,8 +141,12 @@ class CustomerList extends React.Component<MyProps, MyState> {
             searchResult.constructor === Object
         ){
             customerList = this.buildList(searchResult);
-        } else {
+        } else if (Object.entries(this.props.customers.byId).length > 0 && 
+            this.props.customers.byId.constructor === Object)
+        {
             customerList = this.buildList(this.props.customers.byId);
+        } else {
+            customerList = (<p>You have no customers</p>);
         }
 
         let searchbarComponent = null;

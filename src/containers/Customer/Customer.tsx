@@ -190,9 +190,9 @@ class Customer extends React.Component<MyProps, MyState> {
                         Save
                     </Button>
                     <Button 
-                        variant='default' 
+                        variant='outline' 
                         color='primary' 
-                        onClick={this.handleCancel}
+                        onClick={this.handleModeChange}
                     >
                         Cancel
                     </Button>
@@ -217,7 +217,7 @@ class Customer extends React.Component<MyProps, MyState> {
         } else if (this.props.uiState === 'ERROR'){
             warning = <p>{this.props.errorMessage}</p>
         }
-global.console.log('errorMessage',this.props.errorMessage);
+
         return (
             <>
             <Modal 

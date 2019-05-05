@@ -21,6 +21,7 @@ const Input: React.SFC<TextProps> = (props) => {
                 {props.label}
             </StyledLabel>
             <StyledInput 
+                data-lpignore='true' 
                 id={props.label} 
                 type={props.type}
                 value={props.value}

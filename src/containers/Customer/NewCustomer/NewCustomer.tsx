@@ -105,7 +105,7 @@ class NewCustomer extends React.Component<MyProps, MyState> {
                     title={modalConfig.title} 
                     show={modalConfig.show} 
                 >
-                    {modalConfig.message}
+                    <p>{modalConfig.message}</p>
                     <Button 
                         variant='default' 
                         color='primary' 
@@ -120,7 +120,7 @@ class NewCustomer extends React.Component<MyProps, MyState> {
                         type='text' 
                         label='Fistname' 
                         value={this.state.firstName}
-                        placeholder='firstName'
+                        placeholder='Firstname'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
                     />
                 <Input 
@@ -146,12 +146,12 @@ class NewCustomer extends React.Component<MyProps, MyState> {
                     Submit
                 </Button>
                 <Button 
-                        variant='outline' 
-                        color='primary' 
-                        onClick={this.handleCancel}
-                    >
-                        Cancel
-                    </Button>
+                    variant='outline' 
+                    color='primary' 
+                    onClick={this.handleCancel}
+                >
+                    Cancel
+                </Button>
                 </Form>
             </>
           );

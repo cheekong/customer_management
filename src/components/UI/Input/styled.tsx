@@ -7,6 +7,7 @@ export const StyledWrapper = styled.div `
         border: 1px solid lightgray;
         height: 60px;
         display: flex;
+        border-radius: 4px;
     `
 
 export const StyledLabel = styled.label `
@@ -26,4 +27,5 @@ export const StyledInput = styled.input `
     font-size: 1em;
     text-indent:  10px;
     background-color: #f5f5f5;
+    text-align: center;
 `

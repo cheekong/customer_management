@@ -4,7 +4,7 @@ import Backdrop from '../UI/Backdrop/Backdrop'
 import Form from '../UI/Form/Form';
 import List from '../UI/List/List';
 import ListItem from '../UI/List/ListItem/ListItem';
-import {StyledModal} from './Styled';
+import {StyledModal, StyledModalBody} from './Styled';
 
 interface MyProps {
   callbackOnClose?: any;
@@ -33,7 +33,9 @@ class Modal extends React.Component<MyProps, MyState> {
                 <Backdrop>
                     <StyledModal>
                       <Form title={this.props.title}>
-                          {this.props.children}
+                          <StyledModalBody>
+                            {this.props.children}
+                          </StyledModalBody>
                       </Form>
                     </StyledModal>
                 </Backdrop>
