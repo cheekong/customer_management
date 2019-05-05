@@ -92,6 +92,27 @@ class Customer extends React.Component<MyProps, MyState> {
         this.props.history.push('/list');
     }
 
+    handleEditCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        this.initCustomerState();
+    }
+
+    initCustomerState = () => {
+        if(this.props.history.location.state.customer){
+        const customer = this.props.history.location.state.customer;
+            let newCustomerState = {...this.state.customer};
+            newCustomerState = {
+                id: customer.id,
+                firstName: customer.firstName,
+                lastName: customer.lastName,
+                dateOfBirth: new Date(customer.dateOfBirth)
+            }
+            this.setState({customer: newCustomerState});
+        } else {
+            this.props.history.push('/list')
+        }
+    }
+
     handleModeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         this.setState({edit: !this.state.edit})
@@ -104,20 +125,7 @@ class Customer extends React.Component<MyProps, MyState> {
 
     componentDidMount() {
         this.props.resetUIState('customer');
-
-        if(this.props.history.location.state.customer){
-            const customer = this.props.history.location.state.customer;
-            let newCustomerState = {...this.state.customer};
-            newCustomerState = {
-                id: customer.id,
-                firstName: customer.firstName,
-                lastName: customer.lastName,
-                dateOfBirth: new Date(customer.dateOfBirth)
-            }
-            this.setState({customer: newCustomerState});
-        } else {
-            this.props.history.push('/list')
-        }
+        this.initCustomerState();
     }
 
     render(){
@@ -166,7 +174,7 @@ class Customer extends React.Component<MyProps, MyState> {
                         type='text' 
                         label='Fistname' 
                         value={this.state.customer.firstName}
-                        placeholder='firstName'
+                        placeholder='FirstName'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
                     />
                     <Input 
@@ -192,7 +200,7 @@ class Customer extends React.Component<MyProps, MyState> {
                     <Button 
                         variant='outline' 
                         color='primary' 
-                        onClick={this.handleModeChange}
+                        onClick={this.handleEditCancel}
                     >
                         Cancel
                     </Button>
@@ -208,7 +216,7 @@ class Customer extends React.Component<MyProps, MyState> {
         let warning = null;
         if(this.props.uiState === 'COMPLETED'){
             modalConfig.show = true;
-
+            modalConfig.title = 'Success';
             if(this.props.pageAction === 'DELETE'){
                 modalConfig.message = 'Successfully deleted ' + this.state.customer.firstName + ' ' + this.state.customer.lastName;
             } else if (this.props.pageAction === 'SAVE'){
@@ -224,6 +232,7 @@ class Customer extends React.Component<MyProps, MyState> {
                 title={modalConfig.title}  
                 show={modalConfig.show} 
             >
+                <p>{modalConfig.message}</p>
                 <Button 
                     variant='default' 
                     color='primary' 

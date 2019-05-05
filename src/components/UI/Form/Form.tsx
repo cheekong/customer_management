@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import StyledForm from './Styled';
+import {StyledForm, StyledFormContent, StyledFormTitle} from './Styled';
 
 type MyProps = {
   title: string,
@@ -12,8 +12,12 @@ type MyProps = {
 const Form: React.SFC<MyProps>  = (props) => {
   return (
     <StyledForm onSubmit={(e) =>{e.preventDefault();}}>
+      <StyledFormTitle>
         <h1>{props.title}</h1>
+      </StyledFormTitle>
+      <StyledFormContent>
         {props.children}
+      </StyledFormContent>
     </StyledForm>
   );
 }
