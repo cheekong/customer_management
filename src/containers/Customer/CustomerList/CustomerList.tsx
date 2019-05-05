@@ -168,7 +168,7 @@ class CustomerList extends React.Component<MyProps, MyState> {
                     color='primary'
                     onClick={this.handleAddNew}
                 >
-                    Add New Customer
+                    Add a customer
                 </Button>
             </Form>
           );

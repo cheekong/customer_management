@@ -26,9 +26,9 @@ interface MyProps extends RouteComponentProps<any>{
 }
 
 interface MyState {
-    firstName: string,
-    lastName: string,
-    dateOfBirth: Date
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
 }
 
 class NewCustomer extends React.Component<MyProps, MyState> {
@@ -73,7 +73,6 @@ class NewCustomer extends React.Component<MyProps, MyState> {
         this.props.history.push('/list');
     }
     
-
     componentDidMount() {
         this.props.resetUIState('newCustomer');
     }
@@ -113,19 +112,19 @@ class NewCustomer extends React.Component<MyProps, MyState> {
                     </Button>
                 </Modal>
                 <Form title='Add New Customer'>
-                {warning}
-                <Input 
+                    {warning}
+                    <Input 
                         type='text' 
                         label='Fistname' 
                         value={this.state.firstName}
-                        placeholder='Firstname'
+                        placeholder='Enter firstname'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
                     />
-                <Input 
+                    <Input 
                         type='text' 
                         label='Lastname' 
                         value={this.state.lastName}
-                        placeholder='Lastname'
+                        placeholder='Enter lastname'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleLastNameOnChange(e, 'lastName')}
                     />
                     <DateInput 
@@ -133,23 +132,21 @@ class NewCustomer extends React.Component<MyProps, MyState> {
                         value={this.state.dateOfBirth}
                         onChange={(e: any ) => this.handleDateOnChange(e, 'lastName')}
                     />
-                    
-                
-                <Button 
-                    type='submit'
-                    variant='default' 
-                    color='primary'
-                    onClick={this.handleSubmit}
-                >
-                    Submit
-                </Button>
-                <Button 
-                    variant='outline' 
-                    color='primary' 
-                    onClick={this.handleCancel}
-                >
-                    Cancel
-                </Button>
+                    <Button 
+                        type='submit'
+                        variant='default' 
+                        color='primary'
+                        onClick={this.handleSubmit}
+                    >
+                        Submit
+                    </Button>
+                    <Button 
+                        variant='outline' 
+                        color='primary' 
+                        onClick={this.handleCancel}
+                    >
+                        Cancel
+                    </Button>
                 </Form>
             </>
           );

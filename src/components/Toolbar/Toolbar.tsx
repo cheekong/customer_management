@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {StyledToolbar, StyledToolbarCenter} from './Styled'
 
 interface MyProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Toolbar: React.SFC<MyProps> = (props) => {

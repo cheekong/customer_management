@@ -8,7 +8,7 @@ interface MyProps {
   callbackOnClose?: any;
   show: boolean;
   title: string;
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface MyState {

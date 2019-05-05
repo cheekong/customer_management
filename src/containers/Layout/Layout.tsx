@@ -6,11 +6,11 @@ import Navigation from '../../components/Navigation/Navigation';
 import NavigationItem from '../../components/Navigation/NavigationItem/NavigationItem';
 
 interface MyProps {
-    children: ReactNode
+    children: ReactNode;
 }
 
 interface MyState {
-    customers: object
+    customers: object;
 }
 
 class Layout extends React.Component<MyProps, MyState> {

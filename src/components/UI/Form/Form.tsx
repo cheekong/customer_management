@@ -3,8 +3,8 @@ import React, { ReactNode } from 'react';
 import {StyledForm, StyledFormContent, StyledFormTitle} from './Styled';
 
 interface MyProps {
-  title: string,
-  children: ReactNode
+  title: string;
+  children: ReactNode;
     //TODO: ADJUST FOR TYPE SUBMIT
   //onSubmit?: any
 }

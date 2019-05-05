@@ -172,14 +172,14 @@ class Customer extends React.Component<MyProps, MyState> {
                         type='text' 
                         label='Fistname' 
                         value={this.state.customer.firstName}
-                        placeholder='FirstName'
+                        placeholder='Enter firstName'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleFirstNameOnChange(e, 'firstName')}
                     />
                     <Input 
                         type='text' 
                         label='Lastname' 
                         value={this.state.customer.lastName}
-                        placeholder='Lastname'
+                        placeholder='Enter lastname'
                         onChange={(e: React.ChangeEvent<HTMLInputElement> ) => this.handleLastNameOnChange(e, 'lastName')}
                     />
                     <DateInput 

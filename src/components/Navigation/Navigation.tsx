@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 
 interface MyProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Navigation: React.SFC<MyProps> = (props) => {

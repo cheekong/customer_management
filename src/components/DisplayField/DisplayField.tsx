@@ -3,7 +3,7 @@ import {StyledSpan, StyledLabel, StyledParagraph} from './Styled'
 
 interface MyProps {
   label: string;
-  pararapgh: string
+  pararapgh: string;
 }
 
 const CustomerList: React.SFC<MyProps> = (props) => {

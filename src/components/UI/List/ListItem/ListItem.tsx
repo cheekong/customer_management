@@ -3,7 +3,7 @@ import {StyledListItem} from './Styled'
 
 interface MyProps {
   children: ReactNode;
-  onClick?: any
+  onClick?: any;
 }
 
 const ListItem: React.SFC<MyProps> = (props) => {

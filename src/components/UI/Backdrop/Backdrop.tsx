@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { StyledBackdrop } from './Styled';
 
 interface MyProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Backdrop: React.SFC<MyProps>  = (props) => {

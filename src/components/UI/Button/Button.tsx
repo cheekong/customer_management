@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 interface MyProps {
-  type?: 'submit' | 'button' | 'reset',
+  type?: 'submit' | 'button' | 'reset';
   width?: string;
   height?: string;
   size?: string;

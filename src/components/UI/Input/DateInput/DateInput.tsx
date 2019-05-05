@@ -11,7 +11,7 @@ import {
 interface DateProps {
     label: string;
     value: Date;
-    onChange: any
+    onChange: any;
 }
 
 const DatePickerInput: React.SFC<DateProps> = (props) => {
