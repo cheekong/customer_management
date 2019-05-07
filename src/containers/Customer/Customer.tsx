@@ -8,6 +8,7 @@ import DisplayField from '../../components/DisplayField/DisplayField';
 import Input from '../../components/UI/Input/Input';
 import DateInput from '../../components/UI/Input/DateInput/DateInput';
 import Button from '../../components/UI/Button/Button';
+import * as utilities from '../../utilities/utilities';
 import * as actionCreators from '../../store/actions/index';
 
 interface MyProps extends RouteComponentProps<any>{
@@ -92,20 +93,19 @@ class Customer extends React.Component<MyProps, MyState> {
 
     handleEditCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        this.initCustomerState();
+        this.setStateToDefault();
     }
 
-    initCustomerState = () => {
+    setStateToDefault = () => {
         if(this.props.history.location.state.customer){
-        const customer = this.props.history.location.state.customer;
-            let newCustomerState = {...this.state.customer};
-            newCustomerState = {
-                id: customer.id,
-                firstName: customer.firstName,
-                lastName: customer.lastName,
-                dateOfBirth: new Date(customer.dateOfBirth)
-            }
-            this.setState({customer: newCustomerState});
+            const customer = this.props.history.location.state.customer;
+            let newState = utilities.copySimpleObject(this.state);
+            newState.customer.id = customer.id;
+            newState.customer.firstName = customer.firstName;
+            newState.customer.lastName = customer.lastName;
+            newState.customer.dateOfBirth = new Date(customer.dateOfBirth);
+            newState.edit = false;
+            this.setState(newState);
         } else {
             this.props.history.push('/list')
         }
@@ -123,7 +123,7 @@ class Customer extends React.Component<MyProps, MyState> {
 
     componentDidMount() {
         this.props.resetUIState('customer');
-        this.initCustomerState();
+        this.setStateToDefault();
     }
 
     render(){

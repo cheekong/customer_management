@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styleButton from './Styled';
 
 interface MyProps {
   type?: 'submit' | 'button' | 'reset';
@@ -14,74 +14,19 @@ interface MyProps {
 }
 
 const Button: React.SFC<MyProps> = ({type='button', ...props}) => {
-  
-  let styles = null;
-  let widthStyles = null;
-  let sizeStyles = null;
-  let heightStyles = null;
 
-  if (props.variant === 'outline'){
-    styles = `
-      border: 1px solid palevioletred;
-      background-color: white;
-      color: palevioletred;
-    `
-  } else if (props.variant === 'warning'){
-    styles  = `
-      background: #ff0000bd;
-      border: none;
-      color: white;
-    `
-  } else {
-    styles  = `
-      background: palevioletred;
-      border: none;
-      color: white;
-    `
-  }
+    let StyledButton = styleButton(
+      props.variant, 
+      props.width, 
+      props.size,
+      props.height
+    );
 
-  if(props.width !== undefined){
-    widthStyles = `width: ${props.width}`;
-  } else {
-    widthStyles = `width: 100%`;
-  }
-
-  if(props.size !== undefined && props.size === 'small'){
-    sizeStyles = `
-      padding: 5px 5px; 
-      margin: 0 5px;
-    `;
-  } else {
-    sizeStyles = `
-      padding: 15px 40px;
-      margin-top:10px;
-      margin-bottom:10px;
-    `;
-  }
-
-  if(props.height !== undefined){
-    heightStyles = `
-      height: ${props.height};
-    `
-  }
-
-  
-  const StyledButton = styled.button`
-    
-    border-radius: 4px;
-    font-size:1em;
-    cursor: pointer;
-    ${styles}
-    ${widthStyles}
-    ${sizeStyles}
-    ${heightStyles}
-
-    :hover {
-      opacity: 0.25
-     }
-  `;
     return (
-      <StyledButton type={type} onClick={(e) => props.onClick(e)}>
+      <StyledButton 
+        type={type} 
+        onClick={(e) => props.onClick(e)}
+      >
          {props.children}
       </StyledButton>
     );
