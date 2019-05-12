@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal it works 1`] = `
+<div
+  className="sc-bdVaJa fLIace"
+>
+  <div
+    className="sc-ifAKCX iiGFiZ"
+  >
+    <form
+      className="sc-bwzfXH inPTmq"
+      onSubmit={[Function]}
+    >
+      <div
+        className="sc-htpNat jqIXVP"
+      >
+        <h1>
+          my modal
+        </h1>
+      </div>
+      <div
+        className="sc-bxivhb kinwFJ"
+      >
+        <div
+          className="sc-EHOje efBfVR"
+        >
+          <p>
+            TEST
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;

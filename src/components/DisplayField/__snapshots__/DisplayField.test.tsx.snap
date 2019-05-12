@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display field it works 1`] = `
+<span
+  className="sc-bdVaJa crMpnZ"
+>
+  <label
+    className="sc-bwzfXH uMthG"
+  >
+    Firstname
+  </label>
+  <p
+    className="sc-htpNat gbIUNe"
+  >
+    Jim
+  </p>
+</span>
+`;

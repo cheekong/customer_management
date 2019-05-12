@@ -14,12 +14,12 @@ interface MyProps {
 }
 
 const Button: React.SFC<MyProps> = ({type='button', ...props}) => {
-
+global.console.log('button tsx size = ' +  props.size);
     let StyledButton = styleButton(
       props.variant, 
       props.width, 
-      props.size,
-      props.height
+      props.height,
+      props.size
     );
 
     return (
